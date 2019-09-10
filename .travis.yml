@@ -1,0 +1,12 @@
+os: osx
+language: swift
+osx_image: xcode10.3
+xcode_project: Relayer.xcodeproj
+xcode_scheme: Relayer.Package
+
+before_install: make xcode
+
+script: make test
+
+notifications:
+  email: false

@@ -1,0 +1,4 @@
+# file options
+
+--exclude Tests/RelayerTests/XCTestManifests.swift,Snapshots
+
