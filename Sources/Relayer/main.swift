@@ -1,7 +1,8 @@
 import Foundation
 import UB
+import Library
 
-let handler = Handler()
+let handler = Library.Handler()
 
 let node = UB.Node()
 node.delegate = handler
