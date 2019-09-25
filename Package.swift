@@ -14,8 +14,8 @@ let package = Package(
             targets: ["Relayer"]
         ),
         .library(
-            name: "Library",
-            targets: ["Library"]
+            name: "RelayerFramework",
+            targets: ["RelayerFramework"]
         ),
     ],
     dependencies: [
@@ -29,15 +29,15 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Relayer",
-            dependencies: ["Library"]
+            dependencies: ["RelayerFramework"]
         ),
         .target(
-            name: "Library",
+            name: "RelayerFramework",
             dependencies: ["UB"]
         ),
         .testTarget(
-            name: "LibraryTests",
-            dependencies: ["Library"]
+            name: "RelayerFrameworkTests",
+            dependencies: ["RelayerFramework"]
         ),
     ]
 )
