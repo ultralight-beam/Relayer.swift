@@ -2,16 +2,16 @@ import Foundation
 import UB
 // import web3
 
-class EthereumService: Service {
+public class EthereumService: Service {
     let url: URL
     
     /// Initializes an Ethereum Service with a RPC HTTP url
-    init(url: URL) {
+    public init(url: URL) {
         self.url = url
     }
     
     // handle gets called when an Ethereum service is called.
-    func handle(message: Message, node: Node) {
+    public func handle(message: Message, node: Node) {
         // The first btye of the message is the JSONRPC method
         let methodID = message.message[0]
         
