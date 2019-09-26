@@ -1,6 +1,6 @@
 import Foundation
-import UB
 import RelayerFramework
+import UB
 
 let handler = Handler()
 
@@ -18,17 +18,15 @@ request.httpMethod = "POST"
 var payload: [String: Any]
 var jsonPayload: Data
 
-//let address = String(data: message.message[1..<22], encoding: .utf8)!
+// let address = String(data: message.message[1..<22], encoding: .utf8)!
 payload = ["jsonrpc": "2.0",
            "method": "eth_getBalance",
-           "params":["0x0F64928EcA02147075c7614A7d67B0C3Cb37D5DA", "latest"],
+           "params": ["0x0F64928EcA02147075c7614A7d67B0C3Cb37D5DA", "latest"],
            "id": 1]
 jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
 request.httpBody = jsonPayload
 
-
-
-let task = URLSession.shared.dataTask(with: request) { data, response, error in
+let task = URLSession.shared.dataTask(with: request) { data, _, error in
     guard let data = data, error == nil else {
         print(error?.localizedDescription ?? "No data")
         return

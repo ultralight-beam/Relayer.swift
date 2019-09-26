@@ -1,13 +1,13 @@
 import class Foundation.Bundle
-import XCTest
 import Relayer
+import XCTest
 
 final class RelayerTests: XCTestCase {
     func testGetBalance() {
         let url: URL = URL(string: "https://rinkeby.infura.io/f7a08ae0242843f1b1cf480454a6bba5")!
         let ethService = Relayer.EthereumService(url: url)
-        
     }
+
 //    func testExample() throws {
 //        // This is an example of a functional test case.
 //        // Use XCTAssert and related functions to verify your tests produce the correct

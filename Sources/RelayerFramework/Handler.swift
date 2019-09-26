@@ -7,7 +7,7 @@ public class Handler: UB.NodeDelegate {
     fileprivate var services = [UB.UBID: Service]()
 
     /// Initializes a new Handler.
-    public init() { }
+    public init() {}
 
     // @todo there probably should be more stuff here at one point.
 

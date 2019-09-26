@@ -7,7 +7,7 @@ let package = Package(
     platforms: [
         .macOS(.v10_13),
     ],
-   products: [
+    products: [
         .executable(
             name: "Relayer",
             targets: ["Relayer"]
