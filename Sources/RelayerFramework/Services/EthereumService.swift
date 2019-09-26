@@ -26,7 +26,7 @@ public class EthereumService: Service {
         
         switch methodID {
         case "0":
-            let address = String(data: message.message[1..<22], encoding: .utf8)!
+            let address = String(data: message.message[1..<message.message.count], encoding: .utf8)!
             getBalance(address: address){ result in
                 switch result{
                 case .success (let balance):
@@ -43,11 +43,39 @@ public class EthereumService: Service {
                 }
             }
         case "1":
-            print("eth_getTxCount not impled")
-            return
+            let address = String(data: message.message[1..<message.message.count], encoding: .utf8)!
+            getTransactionCount(address: address){ result in
+                switch result{
+                case .success (let balance):
+                    let messageResponse = Message(
+                        proto: UBID(repeating: 1, count: 1),
+                        recipient: message.origin,
+                        from: message.recipient,
+                        origin: message.recipient,
+                        message: balance
+                    )
+                    node.send(messageResponse)
+                case .failure (let error):
+                    print(error)
+                }
+            }
         case "2":
-            //eth.sendRawTx
-            print("eth_sendRawTx not impled")
+            let signedTransaction = String(data: message.message[1..<message.message.count], encoding: .utf8)!
+            sendRawTransaction(signedTransaction: signedTransaction){ result in
+                switch result{
+                case .success (let balance):
+                    let messageResponse = Message(
+                        proto: UBID(repeating: 1, count: 1),
+                        recipient: message.origin,
+                        from: message.recipient,
+                        origin: message.recipient,
+                        message: balance
+                    )
+                    node.send(messageResponse)
+                case .failure (let error):
+                    print(error)
+                }
+            }
             return
         default:
             print("default")
@@ -80,6 +108,46 @@ public class EthereumService: Service {
             switch result {
             case .success (let balance):
                 completion(.success(balance))
+            case .failure (let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    internal func getTransactionCount(address: String, completion: @escaping (Result<Data, Error>) -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let payload: [String: Any] = ["jsonrpc": "2.0",
+                                      "method": "eth_getTransactionCount",
+                                      "params":[address, "latest"],
+                                      "id": 1]
+        let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
+        request.httpBody = jsonPayload
+        
+        httpRequest(request: request){ result in
+            switch result {
+            case .success (let nonce):
+                completion(.success(nonce))
+            case .failure (let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    internal func sendRawTransaction(signedTransaction: String, completion: @escaping (Result<Data, Error>) -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let payload: [String: Any] = ["jsonrpc": "2.0",
+                                      "method": "eth_sendRawTransaction",
+                                      "params":[signedTransaction],
+                                      "id": 1]
+        let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
+        request.httpBody = jsonPayload
+        
+        httpRequest(request: request){ result in
+            switch result {
+            case .success (let txHash):
+                completion(.success(txHash))
             case .failure (let error):
                 completion(.failure(error))
             }
