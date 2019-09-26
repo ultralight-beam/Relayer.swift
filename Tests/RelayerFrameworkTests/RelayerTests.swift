@@ -1,54 +1,28 @@
 import class Foundation.Bundle
 import XCTest
-import RelayerFramework
+@testable import RelayerFramework
 
 final class RelayerTests: XCTestCase {
-    func testGetBalance() {
+    func testGetBalance(){
+        let didFinish = self.expectation(description: #function)
         let url: URL = URL(string: "https://rinkeby.infura.io/f7a08ae0242843f1b1cf480454a6bba5")!
         let ethService = EthereumService(url: url)
-        
-        
+        var bal = ""
+        ethService.getBalance(address: "0x0F64928EcA02147075c7614A7d67B0C3Cb37D5DA"){ result in
+            switch result{
+            case .success(let balance):
+                bal = String(data: balance, encoding: .utf8)!
+                didFinish.fulfill()
+            case .failure (let error):
+                print(error)
+            }
+        }
+    
+        wait(for: [didFinish], timeout: 5)
+        XCTAssertEqual(bal, "{\"jsonrpc\":\"2.0\",\"id\":1,\"result\":\"0x1a55734bf06dc800\"}")
     }
-    //    func testExample() throws {
-    //        // This is an example of a functional test case.
-    //        // Use XCTAssert and related functions to verify your tests produce the correct
-    //        // results.
-    //
-    //        // Some of the APIs that we use below are available in macOS 10.13 and above.
-    //        guard #available(macOS 10.13, *) else {
-    //            return
-    //        }
-    //
-    //        let fooBinary = productsDirectory.appendingPathComponent("Relayer")
-    //
-    //        let process = Process()
-    //        process.executableURL = fooBinary
-    //
-    //        let pipe = Pipe()
-    //        process.standardOutput = pipe
-    //
-    //        try process.run()
-    //        process.waitUntilExit()
-    //
-    //        let data = pipe.fileHandleForReading.readDataToEndOfFile()
-    //        let output = String(data: data, encoding: .utf8)
-    //
-    //        XCTAssertEqual(output, "Hello, world!\n")
-    //    }
-    //
-    //    /// Returns path to the built products directory.
-    //    var productsDirectory: URL {
-    //        #if os(macOS)
-    //            for bundle in Bundle.allBundles where bundle.bundlePath.hasSuffix(".xctest") {
-    //                return bundle.bundleURL.deletingLastPathComponent()
-    //            }
-    //            fatalError("couldn't find the products directory")
-    //        #else
-    //            return Bundle.main.bundleURL
-    //        #endif
-    //    }
-    //
-    //    static var allTests = [
-    //        ("testExample", testExample),
-    //    ]
+
+        static var allTests = [
+            ("testGetBalance", testGetBalance),
+        ]
 }
