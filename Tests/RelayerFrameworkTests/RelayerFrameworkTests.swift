@@ -1,8 +1,7 @@
-import class Foundation.Bundle
 @testable import RelayerFramework
 import XCTest
 
-final class RelayerTests: XCTestCase {
+final class RelayerFrameworkTests: XCTestCase {
     func testGetBalance() {
         let didFinish = self.expectation(description: #function)
         let url: URL = URL(string: "https://rinkeby.infura.io/f7a08ae0242843f1b1cf480454a6bba5")!

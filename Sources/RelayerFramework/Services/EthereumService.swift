@@ -96,10 +96,12 @@ public class EthereumService: Service {
     internal func getBalance(address: String, completion: @escaping (Result<Data, Error>) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let payload: [String: Any] = ["jsonrpc": "2.0",
-                                      "method": "eth_getBalance",
-                                      "params": [address, "latest"],
-                                      "id": 1]
+        let payload: [String: Any] = [
+            "jsonrpc": "2.0",
+            "method": "eth_getBalance",
+            "params": [address, "latest"],
+            "id": 1
+        ]
         let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
         request.httpBody = jsonPayload
 
@@ -116,10 +118,12 @@ public class EthereumService: Service {
     internal func getTransactionCount(address: String, completion: @escaping (Result<Data, Error>) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let payload: [String: Any] = ["jsonrpc": "2.0",
-                                      "method": "eth_getTransactionCount",
-                                      "params": [address, "latest"],
-                                      "id": 1]
+        let payload: [String: Any] = [
+            "jsonrpc": "2.0",
+            "method": "eth_getTransactionCount",
+            "params": [address, "latest"],
+            "id": 1
+        ]
         let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
         request.httpBody = jsonPayload
 
@@ -136,10 +140,12 @@ public class EthereumService: Service {
     internal func sendRawTransaction(signedTransaction: String, completion: @escaping (Result<Data, Error>) -> Void) {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        let payload: [String: Any] = ["jsonrpc": "2.0",
-                                      "method": "eth_sendRawTransaction",
-                                      "params": [signedTransaction],
-                                      "id": 1]
+        let payload: [String: Any] = [
+            "jsonrpc": "2.0",
+            "method": "eth_sendRawTransaction",
+            "params": [signedTransaction],
+            "id": 1
+        ]
         let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
         request.httpBody = jsonPayload
 
