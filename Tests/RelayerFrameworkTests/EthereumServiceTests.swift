@@ -1,7 +1,7 @@
 @testable import RelayerFramework
 import XCTest
 
-final class RelayerFrameworkTests: XCTestCase {
+final class EthereumServiceTests: XCTestCase {
     func testGetBalance() {
         let didFinish = self.expectation(description: #function)
         let url: URL = URL(string: "https://rinkeby.infura.io/f7a08ae0242843f1b1cf480454a6bba5")!
