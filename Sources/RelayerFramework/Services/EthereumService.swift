@@ -75,7 +75,18 @@ public class EthereumService: Service {
         }
     }
 
-    internal func httpRequest(request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) {
+    internal func httpRequest(method: String, params: [String], completion: @escaping (Result<Data, Error>) -> Void) {
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        let payload: [String: Any] = [
+            "jsonrpc": "2.0",
+            "method": method,
+            "params": params,
+            "id": 1
+        ]
+        let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
+        request.httpBody = jsonPayload
+        
         _ = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
@@ -87,18 +98,7 @@ public class EthereumService: Service {
     }
 
     internal func getBalance(address: String, completion: @escaping (Result<Data, Error>) -> Void) {
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let payload: [String: Any] = [
-            "jsonrpc": "2.0",
-            "method": "eth_getBalance",
-            "params": [address, "latest"],
-            "id": 1
-        ]
-        let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
-        request.httpBody = jsonPayload
-
-        httpRequest(request: request) { result in
+        httpRequest(method: "eth_getBalance", params: [address, "latest"]) { result in
             switch result {
             case let .success(balance):
                 completion(.success(balance))
@@ -109,18 +109,7 @@ public class EthereumService: Service {
     }
 
     internal func getTransactionCount(address: String, completion: @escaping (Result<Data, Error>) -> Void) {
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let payload: [String: Any] = [
-            "jsonrpc": "2.0",
-            "method": "eth_getTransactionCount",
-            "params": [address, "latest"],
-            "id": 1
-        ]
-        let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
-        request.httpBody = jsonPayload
-
-        httpRequest(request: request) { result in
+        httpRequest(method: "eth_getTransactionCount", params: [address, "latest"]) { result in
             switch result {
             case let .success(nonce):
                 completion(.success(nonce))
@@ -131,18 +120,7 @@ public class EthereumService: Service {
     }
 
     internal func sendRawTransaction(signedTransaction: String, completion: @escaping (Result<Data, Error>) -> Void) {
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        let payload: [String: Any] = [
-            "jsonrpc": "2.0",
-            "method": "eth_sendRawTransaction",
-            "params": [signedTransaction],
-            "id": 1
-        ]
-        let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
-        request.httpBody = jsonPayload
-
-        httpRequest(request: request) { result in
+        httpRequest(method: "eth_sendRawTransaction", params: [signedTransaction]) { result in
             switch result {
             case let .success(txHash):
                 completion(.success(txHash))
