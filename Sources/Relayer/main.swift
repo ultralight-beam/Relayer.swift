@@ -9,32 +9,18 @@ node.delegate = handler
 node.add(transport: CoreBluetoothTransport())
 
 // @todo handle CLI input, repl
+let service = EthereumService(url: URL(string: "https://rinkeby.infura.io/f7a08ae0242843f1b1cf480454a6bba5")!)
 
-let url = URL(string: "https://rinkeby.infura.io/f7a08ae0242843f1b1cf480454a6bba5")!
-var request = URLRequest(url: url)
 
-request.httpMethod = "POST"
+//Get Balance
+let msg = Message(
+    proto: UBID(repeating: 1, count: 1),
+    recipient: Addr(repeating: 1, count: 1),
+    from: Addr(repeating: 1, count: 1),
+    origin: UBID(repeating: 1, count: 1),
+    message: "000F64928EcA02147075c7614A7d67B0C3Cb37D5DA".hexDecodedData()
+)
 
-var payload: [String: Any]
-var jsonPayload: Data
+service.handle(message: msg, node: node)
 
-// let address = String(data: message.message[1..<22], encoding: .utf8)!
-payload = ["jsonrpc": "2.0",
-           "method": "eth_getBalance",
-           "params": ["0x0F64928EcA02147075c7614A7d67B0C3Cb37D5DA", "latest"],
-           "id": 1]
-jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
-request.httpBody = jsonPayload
-
-let task = URLSession.shared.dataTask(with: request) { data, _, error in
-    guard let data = data, error == nil else {
-        print(error?.localizedDescription ?? "No data")
-        return
-    }
-    print("reponse \(String(data: data, encoding: .utf8)!))")
-}
-
-print("heres")
-task.resume()
-print("WHATS THIS")
 RunLoop.current.run()

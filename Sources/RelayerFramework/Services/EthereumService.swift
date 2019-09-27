@@ -12,20 +12,11 @@ public class EthereumService: Service {
     // handle gets called when an Ethereum service is called.
     public func handle(message: Message, node: Node) {
         // The first btye of the message is the JSONRPC method
-        let methodID = String(data: message.message[0 ..< 1], encoding: .utf8)!
-        print(methodID)
-
-        var request = URLRequest(url: url)
-
-        request.httpMethod = "POST"
-
-        var payload: [String: Any] = ["jsonrpc": "2.0", "id": 1]
-
-        var jsonPayload: Data
+        let methodID = message.message[0]
 
         switch methodID {
-        case "0":
-            let address = String(data: message.message[1 ..< message.message.count], encoding: .utf8)!
+        case 0:
+            let address = "0x" + message.message[1 ..< message.message.count].hexEncodedString()
             getBalance(address: address) { result in
                 switch result {
                 case let .success(balance):
@@ -41,25 +32,25 @@ public class EthereumService: Service {
                     print(error)
                 }
             }
-        case "1":
-            let address = String(data: message.message[1 ..< message.message.count], encoding: .utf8)!
+        case 1:
+            let address = "0x" + message.message[1 ..< message.message.count].hexEncodedString()
             getTransactionCount(address: address) { result in
                 switch result {
-                case let .success(balance):
+                case let .success(nonce):
                     let messageResponse = Message(
                         proto: UBID(repeating: 1, count: 1),
                         recipient: message.origin,
                         from: message.recipient,
                         origin: message.recipient,
-                        message: balance
+                        message: nonce
                     )
                     node.send(messageResponse)
                 case let .failure(error):
                     print(error)
                 }
             }
-        case "2":
-            let signedTransaction = String(data: message.message[1 ..< message.message.count], encoding: .utf8)!
+        case 2:
+            let signedTransaction = "0x" + message.message[1 ..< message.message.count].hexEncodedString()
             sendRawTransaction(signedTransaction: signedTransaction) { result in
                 switch result {
                 case let .success(balance):
