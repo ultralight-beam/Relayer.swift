@@ -82,11 +82,14 @@ public class EthereumService: Service {
             "jsonrpc": "2.0",
             "method": method,
             "params": params,
-            "id": 1
+            "id": 1,
         ]
-        let jsonPayload = try! JSONSerialization.data(withJSONObject: payload)
+        guard let jsonPayload = (try? JSONSerialization.data(withJSONObject: payload)) else {
+            print("Error: JSON could not serialize")
+            return
+        }
         request.httpBody = jsonPayload
-        
+
         _ = URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 print(error?.localizedDescription ?? "No data")
