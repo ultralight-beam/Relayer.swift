@@ -7,5 +7,5 @@ public protocol Service: AnyObject {
     ///
     /// - Parameters:
     ///     - message: The received message to handle.
-    func handle(message: UB.Message)
+    func handle(message: UB.Message, node: UB.Node)
 }
