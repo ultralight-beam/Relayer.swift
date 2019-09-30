@@ -2,12 +2,14 @@ import Foundation
 import UB
 import RelayerFramework
 
-let handler = Handler()
-
 let node = UB.Node()
-let t = CoreBluetoothTransport()
+
+let handler = Handler()
 node.delegate = handler
-node.add(transport: t)
+
+node.add(transport: CoreBluetoothTransport())
+
+node.add(service: PlainTextMessagingService())
 
 while let line = readLine() {
     guard let message = line.data(using: .utf8) else { continue }
@@ -15,7 +17,7 @@ while let line = readLine() {
     node.send(
         Message(
             service: UBID(repeating: 1, count: 1),
-            recipient: UBID(repeating: 1, count: 1),
+            recipient: UBID(repeating: 0, count: 0),
             from: UBID(repeating: 1, count: 1),
             origin: UBID(repeating: 1, count: 1),
             message: message
