@@ -25,10 +25,10 @@ func read() -> String {
     let c = CharacterSet.whitespacesAndNewlines
     return input().trimmingCharacters(in: c)
 }
-//
-//while true {
-//    print(t.peers)
-//    print(read())
-//}
 
-RunLoop.current.run()
+while true {
+    print(t.peers)
+    print(read())
+}
+
+//RunLoop.current.run()
