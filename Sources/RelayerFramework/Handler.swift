@@ -18,10 +18,6 @@ public class Handler: UB.NodeDelegate {
             return
         }
 
-        if let data = String(data: message.message, encoding: .utf8) {
-            print(data)
-        }
-
         guard let service = services[message.service] else { return }
         service.handle(message: message)
     }
