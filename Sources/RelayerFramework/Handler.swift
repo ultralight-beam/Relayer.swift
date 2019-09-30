@@ -18,8 +18,7 @@ public class Handler: UB.NodeDelegate {
             return
         }
 
-        let data = String(data: message.message, encoding: .utf8)
-        if data != nil {
+        if let data = String(data: message.message, encoding: .utf8) {
             print(data)
         }
 

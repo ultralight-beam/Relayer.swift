@@ -32,7 +32,7 @@ while true {
         continue
     }
 
-    guard let data = message.data(using: .utf8) as? Data else { continue }
+    guard let data = message.data(using: .utf8) else { continue }
     node.send(
         Message( // bunch of dummy fields for now as we don't do identity
             proto: UBID(repeating: 1, count: 1),
