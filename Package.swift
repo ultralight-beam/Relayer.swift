@@ -8,6 +8,16 @@ let package = Package(
     platforms: [
         .macOS(.v10_13),
     ],
+    products: [
+        .executable(
+            name: "Relayer",
+            targets: ["Relayer"]
+        ),
+        .library(
+            name: "RelayerFramework",
+            targets: ["RelayerFramework"]
+        ),
+    ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
@@ -19,11 +29,15 @@ let package = Package(
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
             name: "Relayer",
+            dependencies: ["RelayerFramework"]
+        ),
+        .target(
+            name: "RelayerFramework",
             dependencies: ["UB"]
         ),
         .testTarget(
-            name: "RelayerTests",
-            dependencies: ["Relayer"]
+            name: "RelayerFrameworkTests",
+            dependencies: ["RelayerFramework"]
         ),
     ]
 )
