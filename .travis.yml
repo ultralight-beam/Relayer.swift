@@ -4,7 +4,18 @@ osx_image: xcode10.3
 xcode_project: Relayer.xcodeproj
 xcode_scheme: Relayer.Package
 
-before_install: make xcode
+branches:
+  only:
+    - master
+
+before_install:
+  - |
+      if ! git diff --name-only $TRAVIS_COMMIT_RANGE | grep -qvE '(.md)|(.html)|^(LICENSE)|^(docs)'
+      then
+        echo "Only docs were updated, not running the CI."
+        exit
+      fi
+  - make xcode
 
 script: make test
 
