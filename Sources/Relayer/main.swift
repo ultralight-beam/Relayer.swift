@@ -2,7 +2,7 @@ import Foundation
 import UB
 import RelayerFramework
 
-let node = UB.Node()
+let node = Node()
 
 let handler = Handler()
 node.delegate = handler
