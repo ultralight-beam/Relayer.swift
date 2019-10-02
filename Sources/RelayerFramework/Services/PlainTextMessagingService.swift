@@ -2,7 +2,7 @@ import Foundation
 import UB
 
 /// Basic service for receiving plain text messages from other nodes.
-public class PlainTextMessagingService: UB.Service {
+public class PlainTextMessagingService: Service {
 
     /// :nodoc:
     public var identifier = UBID(repeating: 1, count: 1)
