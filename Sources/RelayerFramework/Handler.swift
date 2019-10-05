@@ -7,6 +7,11 @@ public class Handler: UB.NodeDelegate {
     /// A list of services the handler knows
     public private(set) var services = [UBID: Service]()
 
+    /// Adds a service to the handler.
+    public func add(service: Service) {
+        services[service.identifier] = service;
+    }
+
     /// Initializes a new Handler.
     public init() { }
 
@@ -14,7 +19,7 @@ public class Handler: UB.NodeDelegate {
 
     /// :nodoc:
     public func node(_: Node, didReceiveMessage message: Message) {
-        guard let service = services[message.service] else { return }
+        guard let service = services[message.service] else { return } // @todo log
         service.node(node, didReceiveMessage: message)
     }
 }

@@ -7,6 +7,8 @@ let node = Node()
 let handler = Handler()
 node.delegate = handler
 
+handler.add(service: PlainTextMessagingService())
+
 node.add(transport: CoreBluetoothTransport())
 
 while let line = readLine() {
