@@ -1,7 +1,8 @@
 import Foundation
 import UB
 
-public protocol Service {
+/// An interface used to handle messages for a specific service.
+public protocol Service: UB.NodeDelegate {
+    /// The identifier of the service.
     var identifier: UBID { get }
-    func node(_ node: Node, didReceiveMessage message: Message)
 }
