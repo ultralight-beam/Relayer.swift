@@ -9,11 +9,11 @@ public class Handler: UB.NodeDelegate {
 
     /// Adds a service to the handler.
     public func add(service: Service) {
-        services[service.identifier] = service;
+        services[service.identifier] = service
     }
 
     /// Initializes a new Handler.
-    public init() { }
+    public init() {}
 
     // @todo there probably should be more stuff here at one point.
 
