@@ -18,7 +18,7 @@ public class Handler: UB.NodeDelegate {
     // @todo there probably should be more stuff here at one point.
 
     /// :nodoc:
-    public func node(_: Node, didReceiveMessage message: Message) {
+    public func node(_ node: Node, didReceiveMessage message: Message) {
         guard let service = services[message.service] else { return } // @todo log
         service.node(node, didReceiveMessage: message)
     }
