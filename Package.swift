@@ -21,7 +21,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/ultralight-beam/UB.swift.git", .branch("master")),
+        .package(url: "https://github.com/ultralight-beam/UB.swift.git", from: "0.2.0"),
         // .package(path: "../UB.swift/"),
     ],
     targets: [

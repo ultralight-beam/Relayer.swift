@@ -14,9 +14,9 @@
         "package": "UB",
         "repositoryURL": "https://github.com/ultralight-beam/UB.swift.git",
         "state": {
-          "branch": "master",
-          "revision": "f79ef6f3f0f658b80f27d0559d5bbfc084bc237c",
-          "version": null
+          "branch": null,
+          "revision": "d8bec93f5ab4a7711a34b3ca1f5ec0376911cb89",
+          "version": "0.2.0"
         }
       }
     ]
