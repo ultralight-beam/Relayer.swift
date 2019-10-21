@@ -1,8 +1,9 @@
 import Foundation
 import RelayerFramework
 import UB
+import CryptoKit
 
-let node = Node()
+let node = Node(key: CryptoKit.Curve25519.Signing.PrivateKey())
 
 let handler = Handler()
 node.delegate = handler
